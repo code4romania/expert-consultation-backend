@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    ports:
+      - ${EXPERT_DATABASE_PORT:-27017}:27017
+    volumes:
+      - expert-mongo-data:/data/db
+
+  expert-backend-prod:
+    container_name: expert-consultation-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - JARNAME=expertconsultation-0.0.1-SNAPSHOT.jar
+    environment:
+      - EXPERT_DATABASE_URL=mongodb
+    ports:
+      - '${EXPERT_BACKEND_PORT:-8080}:8080'
+    links:
+      - mongodb
+
+volumes:
+  expert-mongo-data:

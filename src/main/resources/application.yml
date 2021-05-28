@@ -6,4 +6,5 @@ server:
 spring:
   data:
     mongodb:
+      host: ${EXPERT_DATABASE_URL:localhost}
       database: expert-consultation
