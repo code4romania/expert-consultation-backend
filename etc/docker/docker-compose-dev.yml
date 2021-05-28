@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    ports:
+      - 27017:27017
+    volumes:
+      - expert-mongo-data:/data/db
+
+volumes:
+  expert-mongo-data:
