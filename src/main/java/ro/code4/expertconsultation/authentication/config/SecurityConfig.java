@@ -1,4 +1,4 @@
-package ro.code4.expertconsultation.authentication.model.persistence;
+package ro.code4.expertconsultation.authentication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

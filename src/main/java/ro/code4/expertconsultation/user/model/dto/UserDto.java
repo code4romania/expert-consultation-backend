@@ -7,7 +7,7 @@ import ro.code4.expertconsultation.core.model.dto.IdentifiableDto;
 @Getter
 @Setter
 public class UserDto extends IdentifiableDto {
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
+    private String phoneNumber;
 }

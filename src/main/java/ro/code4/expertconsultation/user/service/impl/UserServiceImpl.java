@@ -5,8 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ro.code4.expertconsultation.authentication.model.persistence.Authentication;
-import ro.code4.expertconsultation.authentication.model.persistence.CurrentUser;
+import ro.code4.expertconsultation.authentication.model.CurrentUser;
 import ro.code4.expertconsultation.user.model.persistence.User;
 import ro.code4.expertconsultation.user.repository.UserRepository;
 import ro.code4.expertconsultation.user.service.UserService;
@@ -27,21 +26,21 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     public void initDb() {
-//        final Authentication authentication = new Authentication();
-//        authentication.setUsername("test");
-//        authentication.setPassword(passwordEncoder.encode("test"));
-//        final User user = new User();
-//        user.setEmail("test@test.com");
-//        user.setFirstName("Test");
-//        user.setLastName("Test");
-//        user.setAuthentication(authentication);
-//        userRepository.save(user);
+        final long usersCount = userRepository.count();
+        if (usersCount == 0) {
+            final User user = new User();
+            user.setEmail("test@test.com");
+            user.setName("Test User");
+            user.setPassword(passwordEncoder.encode("test"));
+            user.setPhoneNumber("0711111111");
+            userRepository.save(user);
+        }
     }
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final User user = userRepository.findOneByAuthenticationUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
-        return new CurrentUser(username, user.getAuthentication().getPassword(), Collections.emptyList());
+        final User user = userRepository.findOneByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Email %s not found", username)));
+        return new CurrentUser(username, user.getPassword(), Collections.emptyList());
     }
 }
