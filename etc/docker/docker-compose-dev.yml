@@ -1,13 +1,16 @@
-version: '3.7'
-
 services:
-  mongodb:
-    image: mongo
-    container_name: "mongodb"
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'root'
+      POSTGRES_DB: 'expertconsultation'
     ports:
-      - 27017:27017
+      - 5432:5432
     volumes:
-      - expert-mongo-data:/data/db
+      - postgres-vol:/var/lib/postgresql/data
 
 volumes:
-  expert-mongo-data:
+  postgres-vol:

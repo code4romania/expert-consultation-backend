@@ -7,9 +7,9 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://${POSTGRES_DB_URL:localhost}:5432/expertconsultation?serverTimezone=Europe/Bucharest&characterEncoding=UTF-8
+    url: jdbc:postgresql://${EXPERT_DB_URL:localhost}:5432/expertconsultation?serverTimezone=Europe/Bucharest&characterEncoding=UTF-8
     username: postgres
-    password: root
+    password: ${EXPERT_DB_PASSWORD:root}
   jpa:
     show-sql: true
     hibernate.ddl-auto: update
