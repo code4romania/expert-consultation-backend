@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.code4.expertconsultation.organisation.model.dto.OrganisationDto;
 import ro.code4.expertconsultation.organisation.service.OrganisationService;
+import ro.code4.expertconsultation.user.model.dto.UserDto;
+import ro.code4.expertconsultation.user.service.UserService;
 
 import java.util.UUID;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrganisationController {
     private final OrganisationService organisationService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<OrganisationDto> create(@RequestBody final OrganisationDto organisationDto) {
@@ -31,5 +34,12 @@ public class OrganisationController {
     public ResponseEntity<OrganisationDto> get(@PathVariable final UUID id) {
         final OrganisationDto organisationDto = organisationService.get(id);
         return ResponseEntity.ok(organisationDto);
+    }
+
+    @PostMapping("{id}/users")
+    public ResponseEntity<UserDto> addUser(@PathVariable("id") final UUID organisationId,
+                                           @RequestBody final UserDto userDto) {
+        final UserDto savedUserDto = userService.create(organisationId, userDto);
+        return ResponseEntity.ok(savedUserDto);
     }
 }

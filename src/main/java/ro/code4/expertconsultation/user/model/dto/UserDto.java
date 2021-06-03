@@ -10,4 +10,5 @@ public class UserDto extends IdentifiableDto {
     private String name;
     private String email;
     private String phoneNumber;
+    private String profilePictureUrl;
 }
