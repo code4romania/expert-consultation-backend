@@ -17,9 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         prePostEnabled = true  // for @PreAuthorize("hasRole('role'))/@PostAuthorize
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PERMIT_ALL = new String[]{
-            "/login",
-    };
+    private static final String[] PERMIT_ALL = new String[]{};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,14 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(PERMIT_ALL).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .httpBasic();
+                .anyRequest().permitAll();
     }
 
     @Bean

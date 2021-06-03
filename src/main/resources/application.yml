@@ -4,6 +4,8 @@ server:
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
 
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:postgresql://${POSTGRES_DB_URL:localhost}:5432/expertconsultation?serverTimezone=Europe/Bucharest&characterEncoding=UTF-8
     username: postgres
@@ -14,3 +16,6 @@ spring:
     generate-ddl: true
     properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
     properties.hibernate.jdbc.lob.non_contextual_creation: true
+storage:
+  filesystem:
+    directory: expert_consultation_uploads
