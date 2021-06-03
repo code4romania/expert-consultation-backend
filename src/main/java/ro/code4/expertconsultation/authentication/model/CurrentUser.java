@@ -1,4 +1,4 @@
-package ro.code4.expertconsultation.authentication.model.persistence;
+package ro.code4.expertconsultation.authentication.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

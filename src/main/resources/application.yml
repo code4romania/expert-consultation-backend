@@ -4,7 +4,13 @@ server:
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
 
 spring:
-  data:
-    mongodb:
-      host: ${EXPERT_DATABASE_URL:localhost}
-      database: expert-consultation
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_DB_URL:localhost}:5432/expertconsultation?serverTimezone=Europe/Bucharest&characterEncoding=UTF-8
+    username: postgres
+    password: root
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
