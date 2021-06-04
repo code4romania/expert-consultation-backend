@@ -13,7 +13,6 @@ import ro.code4.expertconsultation.user.model.persistence.User;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +30,8 @@ public class OrganisationServiceImpl implements OrganisationService {
     }
 
     @Override
-    public OrganisationDto update(final UUID organisationId, final OrganisationDto organisationDto) {
-        final Organisation organisation = organisationRepository.findById(organisationId)
-                .orElseThrow(EntityNotFoundException::new);
+    public OrganisationDto update(final Long organisationId, final OrganisationDto organisationDto) {
+        final Organisation organisation = organisationRepository.getById(organisationId);
 
         organisation.setCategory(organisationDto.getCategory());
         organisation.setName(organisationDto.getName());
@@ -50,14 +48,14 @@ public class OrganisationServiceImpl implements OrganisationService {
     }
 
     @Override
-    public OrganisationDto get(final UUID organisationId) {
+    public OrganisationDto get(final Long organisationId) {
         final Organisation organisation = organisationRepository.findById(organisationId)
                 .orElseThrow(EntityNotFoundException::new);
         return organisationMapper.map(organisation);
     }
 
     @Override
-    public List<UserDto> getMembers(final UUID organisationId) {
+    public List<UserDto> getMembers(final Long organisationId) {
         final List<User> organisationMembers = organisationRepository.findOrganisationMembers(organisationId);
         return organisationMembers.stream()
                 .map(userMapper::map)

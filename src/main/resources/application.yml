@@ -16,6 +16,7 @@ spring:
     generate-ddl: true
     properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
     properties.hibernate.jdbc.lob.non_contextual_creation: true
+    open-in-view: false
 storage:
   filesystem:
     directory: expert_consultation_uploads

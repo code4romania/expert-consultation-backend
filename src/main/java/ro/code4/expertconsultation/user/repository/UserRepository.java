@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 import ro.code4.expertconsultation.user.model.persistence.User;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByEmail(String email);
 }

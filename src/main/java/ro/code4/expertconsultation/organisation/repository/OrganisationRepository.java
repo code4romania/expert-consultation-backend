@@ -7,12 +7,11 @@ import ro.code4.expertconsultation.organisation.model.persistence.Organisation;
 import ro.code4.expertconsultation.user.model.persistence.User;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface OrganisationRepository extends JpaRepository<Organisation, UUID> {
+public interface OrganisationRepository extends JpaRepository<Organisation, Long> {
 
     @Query("SELECT u FROM User u where u.organisation.id=:organisationId")
-    List<User> findOrganisationMembers(UUID organisationId);
+    List<User> findOrganisationMembers(Long organisationId);
 
 }
