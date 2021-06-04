@@ -17,7 +17,6 @@ import ro.code4.expertconsultation.user.service.UserService;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto create(final UUID organisationId, final UserDto userDto) {
+    public UserDto create(final Long organisationId, final UserDto userDto) {
         final Organisation organisation = organisationRepository.findById(organisationId)
                 .orElseThrow(EntityNotFoundException::new);
         final User user = userMapper.map(userDto);
@@ -59,13 +58,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto get(final UUID userId) {
+    public UserDto get(final Long userId) {
         final User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         return userMapper.map(user);
     }
 
     @Override
-    public UserDto update(final UUID userId, final UserDto userDto) {
+    public UserDto update(final Long userId, final UserDto userDto) {
         final User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
 
         user.setName(userDto.getName());

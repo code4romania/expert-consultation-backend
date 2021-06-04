@@ -8,8 +8,6 @@ import ro.code4.expertconsultation.organisation.service.OrganisationService;
 import ro.code4.expertconsultation.user.model.dto.UserDto;
 import ro.code4.expertconsultation.user.service.UserService;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/organisations")
 @RequiredArgsConstructor
@@ -24,20 +22,20 @@ public class OrganisationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrganisationDto> update(@PathVariable final UUID id,
+    public ResponseEntity<OrganisationDto> update(@PathVariable final Long id,
                                                   @RequestBody final OrganisationDto organisationDto) {
         final OrganisationDto updatedOrganisationDto = organisationService.update(id, organisationDto);
         return ResponseEntity.ok(updatedOrganisationDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrganisationDto> get(@PathVariable final UUID id) {
+    public ResponseEntity<OrganisationDto> get(@PathVariable final Long id) {
         final OrganisationDto organisationDto = organisationService.get(id);
         return ResponseEntity.ok(organisationDto);
     }
 
     @PostMapping("{id}/users")
-    public ResponseEntity<UserDto> addUser(@PathVariable("id") final UUID organisationId,
+    public ResponseEntity<UserDto> addUser(@PathVariable("id") final Long organisationId,
                                            @RequestBody final UserDto userDto) {
         final UserDto savedUserDto = userService.create(organisationId, userDto);
         return ResponseEntity.ok(savedUserDto);
