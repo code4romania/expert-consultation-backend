@@ -1,6 +1,6 @@
-package ro.code4.expertconsultation.organisation.model;
+package ro.code4.expertconsultation.organization.model;
 
-public enum OrganisationCategory {
+public enum OrganizationCategory {
     // Regular organisation
     NGO,
     // Mock organisation for individual experts
