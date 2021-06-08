@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.code4.expertconsultation.core.exception.ExpertConsultationException;
+import ro.code4.expertconsultation.core.model.I18nMessage;
 import ro.code4.expertconsultation.storage.service.StorageApi;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +48,7 @@ public class FilesystemStorageService implements StorageApi {
         } catch (IOException | IllegalStateException exception) {
             log.error("Error saving file to filesystem {}", fileName, exception);
             throw ExpertConsultationException.builder()
-                    .i18nKey("storage.upload.failed")
+                    .error(new I18nMessage("storage.upload.failed"))
                     .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
@@ -61,7 +62,7 @@ public class FilesystemStorageService implements StorageApi {
         } catch (IOException e) {
             log.error("Loading file: {} failed.", documentURI, e);
             throw ExpertConsultationException.builder()
-                    .i18nKey("storage.load.failed")
+                    .error(new I18nMessage("storage.load.failed"))
                     .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
@@ -74,7 +75,7 @@ public class FilesystemStorageService implements StorageApi {
         } catch (IOException e) {
             log.error("Deleting file: {} failed.", documentURI, e);
             throw ExpertConsultationException.builder()
-                    .i18nKey("storage.delete.failed")
+                    .error(new I18nMessage("storage.delete.failed"))
                     .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }

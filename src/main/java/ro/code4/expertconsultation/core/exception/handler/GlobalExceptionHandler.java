@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ro.code4.expertconsultation.core.exception.ExpertConsultationException;
 import ro.code4.expertconsultation.core.exception.ExpertConsultationExceptionResponse;
-import ro.code4.expertconsultation.core.model.I18nError;
+import ro.code4.expertconsultation.core.model.I18nMessage;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
@@ -27,14 +27,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ExpertConsultationException.class)
     protected ResponseEntity<Object> handleLegalValidationException(final ExpertConsultationException ex) {
-        final I18nError error = ex.getI18nKey() != null
-                ? new I18nError(ex.getI18nKey(), ex.getI8nArguments()) : null;
-        return buildResponseEntity(ex.getHttpStatus(), Collections.singletonList(error), ex.getI18nFieldErrors(), null);
+        return buildResponseEntity(ex.getHttpStatus(),
+                Collections.singletonList(ex.getError()), ex.getFieldErrors(), null);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(final EntityNotFoundException ex) {
-        final I18nError error = new I18nError("validation.Resource.not.found", null);
+        final I18nMessage error = new I18nMessage("validation.Resource.not.found", null);
         return buildResponseEntity(HttpStatus.NOT_FOUND, Collections.singletonList(error), null, ex.getLocalizedMessage());
     }
 
@@ -44,19 +43,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   final HttpHeaders headers,
                                                                   final HttpStatus status,
                                                                   final WebRequest request) {
-        final Map<String, I18nError> violations = ex.getBindingResult().getFieldErrors().stream()
+        final Map<String, I18nMessage> violations = ex.getBindingResult().getFieldErrors().stream()
                 .collect(Collectors.toMap(FieldError::getField,
-                        err -> new I18nError(err.getDefaultMessage(), null)));
+                        err -> new I18nMessage(err.getDefaultMessage(), null)));
         return buildResponseEntity(HttpStatus.BAD_REQUEST, null, violations, ex.getLocalizedMessage());
     }
 
     private ResponseEntity<Object> buildResponseEntity(final HttpStatus httpStatus,
-                                                       final List<I18nError> errors,
-                                                       final Map<String, I18nError> fieldErrors,
+                                                       final List<I18nMessage> errors,
+                                                       final Map<String, I18nMessage> fieldErrors,
                                                        final String additionalInfo) {
         final ExpertConsultationExceptionResponse exceptionResponse = new ExpertConsultationExceptionResponse();
-        exceptionResponse.setI18nErrors(errors);
-        exceptionResponse.setI18nFieldErrors(fieldErrors);
+        exceptionResponse.setErrors(errors);
+        exceptionResponse.setFieldErrors(fieldErrors);
         exceptionResponse.setAdditionalInfo(additionalInfo);
         return new ResponseEntity<>(exceptionResponse, httpStatus);
     }
