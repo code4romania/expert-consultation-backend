@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: '${EXPERT_DB_PASSWORD:-root}'
+      POSTGRES_PASSWORD: '${EXPERT_DB_PASSWORD}'
       POSTGRES_DB: 'expertconsultation'
     volumes:
       - postgres-vol:/var/lib/postgresql/data
@@ -20,7 +20,7 @@ services:
     environment:
       - EXPERT_DB_URL=postgres
     ports:
-      - '${EXPERT_BACKEND_PORT:-8080}:8080'
+      - '${EXPERT_BACKEND_PORT}:8080'
     links:
       - postgres
 
