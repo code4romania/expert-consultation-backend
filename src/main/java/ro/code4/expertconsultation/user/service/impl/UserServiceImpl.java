@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.code4.expertconsultation.authentication.model.CurrentUser;
-import ro.code4.expertconsultation.organisation.model.persistence.Organisation;
-import ro.code4.expertconsultation.organisation.repository.OrganisationRepository;
+import ro.code4.expertconsultation.organization.model.persistence.Organization;
+import ro.code4.expertconsultation.organization.repository.OrganizationRepository;
 import ro.code4.expertconsultation.user.mapper.UserMapper;
 import ro.code4.expertconsultation.user.model.dto.UserDto;
 import ro.code4.expertconsultation.user.model.persistence.User;
@@ -22,7 +22,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final OrganisationRepository organisationRepository;
+    private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
@@ -48,10 +48,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(final Long organisationId, final UserDto userDto) {
-        final Organisation organisation = organisationRepository.findById(organisationId)
+        final Organization organization = organizationRepository.findById(organisationId)
                 .orElseThrow(EntityNotFoundException::new);
         final User user = userMapper.map(userDto);
-        user.setOrganisation(organisation);
+        user.setOrganization(organization);
         final User savedUser = userRepository.save(user);
 
         return userMapper.map(savedUser);

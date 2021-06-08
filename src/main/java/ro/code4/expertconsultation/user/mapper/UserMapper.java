@@ -8,7 +8,7 @@ import ro.code4.expertconsultation.user.model.persistence.User;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     @Mapping(target = "password", ignore = true)
-    @Mapping(target = "organisation", ignore = true)
+    @Mapping(target = "organization", ignore = true)
     User map(UserDto userDto);
 
     UserDto map(User User);
