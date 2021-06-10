@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.code4.expertconsultation.organization.mapper.OrganizationMapper;
 import ro.code4.expertconsultation.organization.model.OrganizationFilter;
 import ro.code4.expertconsultation.organization.model.dto.OrganizationDto;
@@ -27,6 +28,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationMapper organizationMapper;
     private final UserMapper userMapper;
 
+    @Transactional
     @Override
     public OrganizationDto create(final OrganizationDto organizationDto) {
         final Organization organization = organizationMapper.map(organizationDto);
@@ -34,9 +36,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.map(savedOrganization);
     }
 
+    @Transactional
     @Override
     public OrganizationDto update(final Long organizationId, final OrganizationDto organizationDto) {
-        final Organization organization = organizationRepository.getById(organizationId);
+        final Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(EntityNotFoundException::new);
 
         organization.setCategory(organizationDto.getCategory());
         organization.setName(organizationDto.getName());
@@ -52,6 +56,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.map(savedOrganization);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public OrganizationDto get(final Long organizationId) {
         final Organization organization = organizationRepository.findById(organizationId)
@@ -59,6 +64,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.map(organization);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<OrganizationDto> list(final OrganizationFilter organizationFilter, final Pageable pageable) {
         final Page<Organization> organizationsPage = organizationRepository
@@ -66,6 +72,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationsPage.map(organizationMapper::map);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<UserDto> listMembers(final Long organizationId) {
         final List<User> organizationMembers = organizationRepository.findOrganizationMembers(organizationId);
