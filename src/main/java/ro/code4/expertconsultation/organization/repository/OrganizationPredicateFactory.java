@@ -19,7 +19,7 @@ public class OrganizationPredicateFactory {
         }
 
         if (filter.getName() != null) {
-            whereFilter.and(organization.name.like("%s" + filter.getName() + "%s"));
+            whereFilter.and(organization.name.like("%" + filter.getName() + "%"));
         }
 
         return whereFilter;
