@@ -17,6 +17,9 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        jdbc:
+          batch_size: 10
+        order_inserts: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc.lob.non_contextual_creation: true
 storage:
