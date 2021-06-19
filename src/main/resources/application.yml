@@ -22,6 +22,10 @@ spring:
         order_inserts: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc.lob.non_contextual_creation: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
 storage:
   filesystem:
     directory: expert_consultation_uploads
