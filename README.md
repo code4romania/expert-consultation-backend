@@ -2,6 +2,8 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/expert-consultation-backend.svg)](https://github.com/code4romania/expert-consultation-backend/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/expert-consultation-backend.svg)](https://github.com/code4romania/expert-consultation-backend/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) ![](https://github.com/code4romania/expert-consultation-backend/workflows/Build/badge.svg)
 
+**Check out the [Wiki](https://github.com/code4romania/expert-consultation-backend/wiki)!**
+
 Expert Consultation is prototyped and developed by [Code for Romania](https://code4.ro/ro).
 
 Expert Consultation is an application meant to allow a public institution (or any other entity) to create a piece of legislation, proposal or any other type of document and to initiate a round of consultation with experts. The experts in this platform are organized in gorups (NGOs, associations etc.) and they can add their opinions to each individual part of the consulted document. At the end of this process, each group will create a restructured version of the initial document and sent it upstream, to the institution or entity that organized the consultation.
