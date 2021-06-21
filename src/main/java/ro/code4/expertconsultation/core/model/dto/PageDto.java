@@ -26,7 +26,7 @@ public class PageDto<T> {
 
         pageable = PageableDto.builder()
                 .pageSize(page.getPageable().getPageSize())
-                .pageNumber(page.getPageable().getPageNumber())
+                .pageNumber(page.getPageable().getPageNumber() + 1)
                 .build();
     }
 }
