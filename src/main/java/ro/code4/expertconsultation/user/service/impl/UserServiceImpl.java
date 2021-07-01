@@ -16,6 +16,7 @@ import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 
 @Service
@@ -46,10 +47,10 @@ public class UserServiceImpl implements UserService {
         return new CurrentUser(username, user.getPassword(), Collections.emptyList());
     }
 
+    @Transactional
     @Override
     public UserDto create(final Long organisationId, final UserDto userDto) {
-        final Organization organization = organizationRepository.findById(organisationId)
-                .orElseThrow(EntityNotFoundException::new);
+        final Organization organization = organizationRepository.getById(organisationId);
         final User user = userMapper.map(userDto);
         user.setOrganization(organization);
         final User savedUser = userRepository.save(user);
@@ -57,12 +58,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.map(savedUser);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDto get(final Long userId) {
         final User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         return userMapper.map(user);
     }
 
+    @Transactional
     @Override
     public UserDto update(final Long userId, final UserDto userDto) {
         final User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);

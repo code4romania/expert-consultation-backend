@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class DocumentBlock extends Identifiable {
-    @Lob
+    @Column(columnDefinition="TEXT")
     private String content;
     private Integer index;
     @ManyToOne(fetch = FetchType.LAZY)

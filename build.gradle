@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-core'
+    implementation "io.springfox:springfox-boot-starter:${swaggerSpringVersion}"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 
     compileOnly 'org.projectlombok:lombok'
