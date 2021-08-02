@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ro.code4.expertconsultation.authentication.jwt.JwtAuthenticationResponse;
-import ro.code4.expertconsultation.authentication.model.CurrentUser;
+import ro.code4.expertconsultation.authentication.model.LoginRequest;
 import ro.code4.expertconsultation.authentication.service.AuthenticationService;
 
 @RestController
@@ -19,8 +19,8 @@ public class AuthenticationController {
 
     //todo create valid annotation
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody final CurrentUser currentUser) {
-        return authenticationService.login(currentUser);
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody final LoginRequest loginRequest) {
+        return authenticationService.login(loginRequest);
     }
 
 }

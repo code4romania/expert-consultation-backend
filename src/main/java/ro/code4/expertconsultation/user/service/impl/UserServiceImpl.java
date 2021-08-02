@@ -1,12 +1,9 @@
 package ro.code4.expertconsultation.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ro.code4.expertconsultation.authentication.model.CurrentUser;
 import ro.code4.expertconsultation.organization.model.persistence.Organization;
 import ro.code4.expertconsultation.organization.repository.OrganizationRepository;
 import ro.code4.expertconsultation.user.mapper.UserMapper;
@@ -17,7 +14,6 @@ import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -38,13 +34,6 @@ public class UserServiceImpl implements UserService {
             user.setPhoneNumber("0711111111");
             userRepository.save(user);
         }
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final User user = userRepository.findOneByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("Email %s not found", username)));
-        return new CurrentUser(username, user.getPassword(), Collections.emptyList());
     }
 
     @Transactional

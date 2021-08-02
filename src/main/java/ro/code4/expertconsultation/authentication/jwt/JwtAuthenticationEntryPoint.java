@@ -13,7 +13,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(final HttpServletRequest request,
                          final HttpServletResponse response,
-                         final AuthenticationException e)  {
+                         final AuthenticationException e) {
 //         invoked when user tries to access a secured REST resource without supplying any credentials
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
