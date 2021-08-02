@@ -6,7 +6,7 @@
 
 Expert Consultation is prototyped and developed by [Code for Romania](https://code4.ro/ro).
 
-Expert Consultation is an application meant to allow a public institution (or any other entity) to create a piece of legislation, proposal or any other type of document and to initiate a round of consultation with experts. The experts in this platform are organized in gorups (NGOs, associations etc.) and they can add their opinions to each individual part of the consulted document. At the end of this process, each group will create a restructured version of the initial document and sent it upstream, to the institution or entity that organized the consultation.
+Expert Consultation is an application meant to allow a public institution (or any other entity) to create a piece of legislation, proposal or any other type of document and to initiate a round of consultation with experts. The experts in this platform are organized in groups (NGOs, associations etc.) and they can add their opinions to each individual part of the consulted document. At the end of this process, each group will create a restructured version of the initial document and send it upstream, to the institution or entity that organized the consultation.
 
 Expert Consultation is  a project that has been researched and prototyped in [Civic Labs](https://civiclabs.ro/ro).
 
