@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.code4.expertconsultation.authentication.model.CurrentUser;
 import ro.code4.expertconsultation.organization.model.persistence.Organization;
 import ro.code4.expertconsultation.organization.repository.OrganizationRepository;
@@ -16,7 +17,6 @@ import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 
 @Service
