@@ -7,7 +7,7 @@
 
 * create and run docker images for the server (clones the latest version) and all its dependencies:
 ``` shell
-docker-compose -f etc/docker/docker-compose.yml up
+docker-compose -f etc/docker/docker-compose.yml --env-file etc/docker/.env.example up
 ```
 * create and run docker images for all server dependencies (mongodb):
 ``` shell
