@@ -12,6 +12,5 @@ services:
     volumes:
       - postgres-vol:/var/lib/postgresql/data
 
-
 volumes:
   postgres-vol:
