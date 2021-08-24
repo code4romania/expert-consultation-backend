@@ -12,5 +12,19 @@ services:
     volumes:
       - postgres-vol:/var/lib/postgresql/data
 
+  expert-backend-prod:
+    container_name: expert-consultation-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - JARNAME=expertconsultation-0.0.1-SNAPSHOT.jar
+    environment:
+      - EXPERT_DB_URL=postgres
+    ports:
+      - '${EXPERT_BACKEND_PORT}:8080'
+    links:
+      - postgres
+
 volumes:
   postgres-vol:
