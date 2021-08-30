@@ -13,20 +13,28 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping
-    public CommentDto create(@RequestBody CommentDto commentDto,
-                             @PathVariable final Long userId,
-                             @PathVariable final Long documentId,
-                             @PathVariable final Long blockId) {
+    public CommentDto create(
+            @PathVariable final Long userId,
+            @PathVariable final Long documentId,
+            @PathVariable final Long blockId,
+            @RequestBody CommentDto commentDto) {
         return commentService.create(userId, documentId, blockId, commentDto);
     }
 
     @GetMapping("/{id}")
-    public CommentDto get(@PathVariable final Long documentId,
-                          @PathVariable final Long blockId,
-                          @PathVariable final Long id) {
-        return commentService.get(documentId, blockId, id);
+    public CommentDto get(@PathVariable final Long id) {
+        return commentService.get(id);
     }
 
+    @PutMapping("/{id}")
+    public CommentDto update(@PathVariable final Long id,
+                             @RequestBody final CommentDto commentDto) {
+        return commentService.update(id, commentDto);
+    }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable final Long id) {
+        commentService.delete(id);
+    }
 
 }
