@@ -1,6 +1,7 @@
 package ro.code4.expertconsultation.document.service;
 
 import ro.code4.expertconsultation.document.model.dto.DocumentBlockDto;
+import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface DocumentBlockService {
     DocumentBlockDto update(Long documentId, Long documentBlockId, DocumentBlockDto documentBlockDto);
 
     void delete(Long documentId, Long documentBlockId);
+
+    DocumentBlock getEntity(Long documentId, Long documentBlockId);
 }
