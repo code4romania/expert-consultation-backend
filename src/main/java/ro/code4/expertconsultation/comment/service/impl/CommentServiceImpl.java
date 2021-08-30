@@ -8,7 +8,6 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.CommentService;
-import ro.code4.expertconsultation.document.model.dto.DocumentBlockDto;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
 import ro.code4.expertconsultation.exception.InvalidArgumentException;
@@ -30,12 +29,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto get(Long documentId, Long blockId, Long id) {
-        DocumentBlockDto documentBlockDto = documentBlockService.get(documentId, blockId);
-        return documentBlockDto.getComments().stream()
-                .filter(comment -> comment.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EntityNotFoundException::new);
+    public CommentDto get(Long id) {
+        if (id == null) {
+            throw new InvalidArgumentException("Arguments cannot be null");
+        }
+
+        Comment comment = commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return commentMapper.map(comment);
 
     }
 
@@ -44,8 +44,8 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto create(Long userId, Long documentId, Long blockId, CommentDto commentDto) {
 
         if (((userId == null) || (documentId == null) || (blockId == null) || (commentDto == null))) {
-            throw new InvalidArgumentException("Arguments cannot be null"); //todo pull this into a const
-        } //todo create exception handler
+            throw new InvalidArgumentException("Arguments cannot be null");
+        }
 
         final User author = userService.getEntity(userId);
 
@@ -63,7 +63,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentDto update(Long commentId, CommentDto commentDto) {
-        Comment comment = commentRepository.getById(commentId);
+        if ((commentId == null) || (commentDto == null)) {
+            throw new InvalidArgumentException("Arguments cannot be null");
+        }
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow(EntityNotFoundException::new);
         comment.setContent(commentDto.getContent());
 
         commentRepository.save(comment);
@@ -74,6 +78,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void delete(Long commentId) {
+        if (commentId == null) {
+            throw new InvalidArgumentException("Arguments cannot be null");
+        }
         commentRepository.deleteById(commentId);
     }
 }

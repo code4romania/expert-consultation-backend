@@ -4,7 +4,7 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 
 public interface CommentService {
 
-    CommentDto get(Long documentId, Long blockId, Long id);
+    CommentDto get(Long id);
 
     CommentDto create(Long userId, Long documentId, Long blockId, CommentDto commentDto);
 
