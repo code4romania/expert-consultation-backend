@@ -21,6 +21,8 @@ import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -190,6 +192,41 @@ public class CommentServiceTest {
 
         assertThrows(InvalidArgumentException.class, () -> sut.delete(null));
 
+    }
+    
+    @Test
+    void given_valid_block_id_when_list_then_return_dto_list() {
+        //give
+        long documentBlockId = 1l;
+        Comment commentMock = mock(Comment.class);
+        when(commentRepository.findCommentsByDocumentBlock(documentBlockId)).thenReturn(List.of(commentMock));
+        when(commentMapper.map(commentMock)).thenReturn(commentDto);
+
+        //when
+        List<CommentDto> results = sut.list(documentBlockId);
+
+        //then
+        assertThat(results.get(0)).isEqualTo(commentDto);
+    }
+
+    @Test
+    void given_invalid_block_id_when_list_then_return_empty_list() {
+        //give
+        long documentBlockId = 2l; //invalid
+
+        when(commentRepository.findCommentsByDocumentBlock(documentBlockId)).thenReturn(Collections.EMPTY_LIST);
+
+        //when
+        List<CommentDto> results = sut.list(documentBlockId);
+
+        //then
+        assertThat(results.size()).isEqualTo(0);
+    }
+
+    @Test
+    void given_null_when_list_then_throw_exception() {
+
+        assertThrows(InvalidArgumentException.class, () -> sut.list(null));
     }
 }
 

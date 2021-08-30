@@ -8,6 +8,7 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.CommentService;
+import ro.code4.expertconsultation.document.model.dto.DocumentBlockDto;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
 import ro.code4.expertconsultation.exception.InvalidArgumentException;
@@ -15,6 +16,8 @@ import ro.code4.expertconsultation.user.model.persistence.User;
 import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -28,7 +31,20 @@ public class CommentServiceImpl implements CommentService {
     private UserService userService;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
+    public List<CommentDto> list(final Long documentBlockId) {
+        if (documentBlockId == null) {
+            throw new InvalidArgumentException("Arguments cannot be null");
+        }
+
+        final List<Comment> comments = commentRepository.findCommentsByDocumentBlock(documentBlockId);
+        return comments.stream()
+                .map(commentMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public CommentDto get(Long id) {
         if (id == null) {
             throw new InvalidArgumentException("Arguments cannot be null");
