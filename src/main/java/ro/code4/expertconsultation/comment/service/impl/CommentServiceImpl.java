@@ -8,7 +8,6 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.CommentService;
-import ro.code4.expertconsultation.document.model.dto.DocumentBlockDto;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
 import ro.code4.expertconsultation.exception.InvalidArgumentException;

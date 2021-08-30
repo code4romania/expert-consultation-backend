@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ro.code4.expertconsultation.core.model.dto.IdentifiableDto;
 import ro.code4.expertconsultation.comment.model.dto.CommentDto;
+import ro.code4.expertconsultation.core.model.dto.IdentifiableDto;
 
 import java.util.List;
 

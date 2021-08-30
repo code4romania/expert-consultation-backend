@@ -35,7 +35,7 @@ public class TestUtils {
 
     public CommentDto getCommentDto() {
         CommentDto commentDto = CommentDto.builder()
-                .content(TEST_TEXT) //todo pull this in a constant as well
+                .content(TEST_TEXT)
                 .creationTime(Timestamp.valueOf(TIMESTAMP))
                 .build();
         commentDto.setId(1L);
@@ -72,7 +72,7 @@ public class TestUtils {
                 .type(DocumentType.LEGE)
                 .build();
 
-        document.setId(1L); //todo pull id into constant
+        document.setId(1L);
         return document;
     }
 

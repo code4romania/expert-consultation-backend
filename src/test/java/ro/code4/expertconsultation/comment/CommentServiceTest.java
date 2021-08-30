@@ -12,7 +12,6 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.impl.CommentServiceImpl;
-import ro.code4.expertconsultation.document.model.dto.DocumentBlockDto;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
 import ro.code4.expertconsultation.exception.InvalidArgumentException;
@@ -20,7 +19,6 @@ import ro.code4.expertconsultation.user.model.persistence.User;
 import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,15 +32,7 @@ public class CommentServiceTest {
 
     private final TestUtils testUtils = new TestUtils();
 
-    private Comment comment;
-
     private CommentDto commentDto;
-
-    private DocumentBlockDto documentBlockDto;
-
-    private DocumentBlock documentBlock;
-
-    private User user;
 
     @Mock
     private DocumentBlockService documentBlockService;
@@ -61,13 +51,7 @@ public class CommentServiceTest {
 
     @BeforeEach
     void setUp() {
-        comment = testUtils.getCommentEntity();
         commentDto = testUtils.getCommentDto();
-
-        documentBlock = testUtils.getDocumentBlockEntity();
-        documentBlockDto = testUtils.getDocumentBlockDto();
-
-        user = testUtils.getUserEntity();
     }
 
     @Test
@@ -185,19 +169,17 @@ public class CommentServiceTest {
 
     }
 
-
-
     @Test
     void given_any_null_value_when_delete_then_throw_exception() {
 
         assertThrows(InvalidArgumentException.class, () -> sut.delete(null));
 
     }
-    
+
     @Test
     void given_valid_block_id_when_list_then_return_dto_list() {
         //give
-        long documentBlockId = 1l;
+        long documentBlockId = 1L;
         Comment commentMock = mock(Comment.class);
         when(commentRepository.findCommentsByDocumentBlock(documentBlockId)).thenReturn(List.of(commentMock));
         when(commentMapper.map(commentMock)).thenReturn(commentDto);
@@ -212,7 +194,7 @@ public class CommentServiceTest {
     @Test
     void given_invalid_block_id_when_list_then_return_empty_list() {
         //give
-        long documentBlockId = 2l; //invalid
+        long documentBlockId = 2L; //invalid
 
         when(commentRepository.findCommentsByDocumentBlock(documentBlockId)).thenReturn(Collections.EMPTY_LIST);
 

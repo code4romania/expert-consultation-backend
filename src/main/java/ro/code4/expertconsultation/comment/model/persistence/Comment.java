@@ -7,11 +7,10 @@ import ro.code4.expertconsultation.user.model.persistence.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Builder
 @Entity
-@Table(name="comments")
+@Table(name = "comments")
 @Getter
 @Setter
 @AllArgsConstructor
