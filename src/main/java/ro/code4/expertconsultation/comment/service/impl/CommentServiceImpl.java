@@ -1,6 +1,7 @@
 package ro.code4.expertconsultation.comment.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.code4.expertconsultation.comment.mapper.CommentMapper;
@@ -8,9 +9,10 @@ import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.CommentService;
+import ro.code4.expertconsultation.core.exception.ExpertConsultationException;
+import ro.code4.expertconsultation.core.model.I18nMessage;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
-import ro.code4.expertconsultation.exception.InvalidArgumentException;
 import ro.code4.expertconsultation.user.model.persistence.User;
 import ro.code4.expertconsultation.user.service.UserService;
 
@@ -33,7 +35,10 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     public List<CommentDto> list(final Long documentBlockId) {
         if (documentBlockId == null) {
-            throw new InvalidArgumentException("Arguments cannot be null");
+            throw ExpertConsultationException.builder()
+                    .error(new I18nMessage("null.arguments.received"))
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         final List<Comment> comments = commentRepository.findCommentsByDocumentBlock(documentBlockId);
@@ -46,7 +51,10 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     public CommentDto get(Long id) {
         if (id == null) {
-            throw new InvalidArgumentException("Arguments cannot be null");
+            throw ExpertConsultationException.builder()
+                    .error(new I18nMessage("null.arguments.received"))
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         Comment comment = commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
@@ -59,7 +67,10 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto create(Long userId, Long documentId, Long blockId, CommentDto commentDto) {
 
         if (((userId == null) || (documentId == null) || (blockId == null) || (commentDto == null))) {
-            throw new InvalidArgumentException("Arguments cannot be null");
+            throw ExpertConsultationException.builder()
+                    .error(new I18nMessage("null.arguments.received"))
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         final User author = userService.getEntity(userId);
@@ -79,7 +90,10 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto update(Long commentId, CommentDto commentDto) {
         if ((commentId == null) || (commentDto == null)) {
-            throw new InvalidArgumentException("Arguments cannot be null");
+            throw ExpertConsultationException.builder()
+                    .error(new I18nMessage("null.arguments.received"))
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(EntityNotFoundException::new);
@@ -94,7 +108,10 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void delete(Long commentId) {
         if (commentId == null) {
-            throw new InvalidArgumentException("Arguments cannot be null");
+            throw ExpertConsultationException.builder()
+                    .error(new I18nMessage("null.arguments.received"))
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
         commentRepository.deleteById(commentId);
     }

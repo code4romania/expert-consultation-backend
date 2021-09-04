@@ -72,7 +72,6 @@ public class DocumentBlockServiceImpl implements DocumentBlockService {
     }
 
     public DocumentBlock getEntity(final Long documentId, final Long documentBlockId) {
-        return documentBlockRepository.findById(documentBlockId)
-                .orElseThrow(EntityNotFoundException::new);
+        return documentBlockRepository.getById(documentId);
     }
 }

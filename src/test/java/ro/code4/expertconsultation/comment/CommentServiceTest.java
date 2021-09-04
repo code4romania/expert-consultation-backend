@@ -6,15 +6,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ro.code4.expertconsultation.TestUtils;
 import ro.code4.expertconsultation.comment.mapper.CommentMapper;
 import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
 import ro.code4.expertconsultation.comment.service.impl.CommentServiceImpl;
+import ro.code4.expertconsultation.core.exception.ExpertConsultationException;
 import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.document.service.DocumentBlockService;
-import ro.code4.expertconsultation.exception.InvalidArgumentException;
 import ro.code4.expertconsultation.user.model.persistence.User;
 import ro.code4.expertconsultation.user.service.UserService;
 
@@ -26,11 +25,11 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+import static ro.code4.expertconsultation.utils.FactoryManager.commentFactory;
 
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
 
-    private final TestUtils testUtils = new TestUtils();
 
     private CommentDto commentDto;
 
@@ -51,8 +50,9 @@ public class CommentServiceTest {
 
     @BeforeEach
     void setUp() {
-        commentDto = testUtils.getCommentDto();
+        commentDto = commentFactory.getCommentDto();
     }
+
 
     @Test
     void given_existing_ids_when_get_then_return_dto() {
@@ -60,7 +60,6 @@ public class CommentServiceTest {
         long id = 1;
 
         Comment commentMock = mock(Comment.class);
-
         when(commentRepository.findById(id)).thenReturn(Optional.of(commentMock));
         when(commentMapper.map(commentMock)).thenReturn(commentDto);
 
@@ -85,7 +84,7 @@ public class CommentServiceTest {
     @Test
     void given_any_null_value_when_get_then_throw_exception() {
 
-        assertThrows(InvalidArgumentException.class, () -> sut.get(null));
+        assertThrows(ExpertConsultationException.class, () -> sut.get(null));
     }
 
 
@@ -128,7 +127,7 @@ public class CommentServiceTest {
 
 
         //then
-        assertThrows(InvalidArgumentException.class, () -> sut.create(userId, documentId, blockId, null));
+        assertThrows(ExpertConsultationException.class, () -> sut.create(userId, documentId, blockId, null));
     }
 
 
@@ -165,14 +164,14 @@ public class CommentServiceTest {
     @Test
     void given_any_null_value_when_update_then_throw_exception() {
 
-        assertThrows(InvalidArgumentException.class, () -> sut.update(null, commentDto));
+        assertThrows(ExpertConsultationException.class, () -> sut.update(null, commentDto));
 
     }
 
     @Test
     void given_any_null_value_when_delete_then_throw_exception() {
 
-        assertThrows(InvalidArgumentException.class, () -> sut.delete(null));
+        assertThrows(ExpertConsultationException.class, () -> sut.delete(null));
 
     }
 
@@ -208,7 +207,7 @@ public class CommentServiceTest {
     @Test
     void given_null_when_list_then_throw_exception() {
 
-        assertThrows(InvalidArgumentException.class, () -> sut.list(null));
+        assertThrows(ExpertConsultationException.class, () -> sut.list(null));
     }
 }
 

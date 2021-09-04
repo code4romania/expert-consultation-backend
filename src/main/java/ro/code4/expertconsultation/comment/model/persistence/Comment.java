@@ -6,7 +6,7 @@ import ro.code4.expertconsultation.document.model.persistence.DocumentBlock;
 import ro.code4.expertconsultation.user.model.persistence.User;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 public class Comment extends Identifiable {
 
 
-    private Timestamp creationTime;
+    private LocalDateTime creationTime;
 
     private String content;
 

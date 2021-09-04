@@ -69,6 +69,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getEntity(final Long userId) {
-        return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        return userRepository.getById(userId);
     }
 }

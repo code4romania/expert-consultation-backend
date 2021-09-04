@@ -3,7 +3,7 @@ package ro.code4.expertconsultation.comment.model.dto;
 import lombok.*;
 import ro.code4.expertconsultation.core.model.dto.IdentifiableDto;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class CommentDto extends IdentifiableDto {
-    private Timestamp creationTime;
+    private LocalDateTime creationTime;
     private String content;
 
 }
