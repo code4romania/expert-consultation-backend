@@ -16,5 +16,5 @@ public interface DocumentBlockService {
 
     void delete(Long documentId, Long documentBlockId);
 
-    DocumentBlock getEntity(Long documentId, Long documentBlockId);
+    DocumentBlock getEntity(Long documentBlockId);
 }

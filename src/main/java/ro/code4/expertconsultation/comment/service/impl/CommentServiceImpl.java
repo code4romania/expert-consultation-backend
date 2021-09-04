@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
 
         final User author = userService.getEntity(userId);
 
-        final DocumentBlock documentBlock = documentBlockService.getEntity(documentId, blockId);
+        final DocumentBlock documentBlock = documentBlockService.getEntity(blockId);
 
         final Comment comment = commentMapper.map(commentDto);
 

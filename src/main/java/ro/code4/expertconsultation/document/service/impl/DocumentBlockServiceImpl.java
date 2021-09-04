@@ -71,7 +71,7 @@ public class DocumentBlockServiceImpl implements DocumentBlockService {
         documentBlockRepository.deleteById(documentBlockId);
     }
 
-    public DocumentBlock getEntity(final Long documentId, final Long documentBlockId) {
-        return documentBlockRepository.getById(documentId);
+    public DocumentBlock getEntity(final Long documentBlockId) {
+        return documentBlockRepository.getById(documentBlockId);
     }
 }

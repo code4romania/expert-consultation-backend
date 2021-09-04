@@ -99,7 +99,7 @@ public class CommentServiceTest {
         when(userService.getEntity(userId)).thenReturn(authorMock);
 
         DocumentBlock documentBlockMock = mock(DocumentBlock.class);
-        when(documentBlockService.getEntity(documentId, blockId)).thenReturn(documentBlockMock);
+        when(documentBlockService.getEntity(blockId)).thenReturn(documentBlockMock);
 
         CommentDto commentDtoMock = mock(CommentDto.class);
         Comment commentMock = mock(Comment.class);
