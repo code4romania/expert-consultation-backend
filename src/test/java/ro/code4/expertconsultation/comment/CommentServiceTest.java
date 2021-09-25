@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ro.code4.expertconsultation.comment.mapper.CommentMapper;
+import ro.code4.expertconsultation.comment.model.CommentCreationRequest;
 import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
@@ -28,8 +29,7 @@ import static org.mockito.Mockito.*;
 import static ro.code4.expertconsultation.utils.FactoryManager.commentFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class CommentServiceTest {
-
+class CommentServiceTest {
 
     private CommentDto commentDto;
 
@@ -52,7 +52,6 @@ public class CommentServiceTest {
     void setUp() {
         commentDto = commentFactory.getCommentDto();
     }
-
 
     @Test
     void given_existing_ids_when_get_then_return_dto() {
@@ -87,9 +86,8 @@ public class CommentServiceTest {
         assertThrows(ExpertConsultationException.class, () -> sut.get(null));
     }
 
-
     @Test
-    void given_commentDto_and_valid_ids_when_create_then_comment_is_created() {
+    void given_valid_commentRequest_when_create_then_comment_is_created() {
         //given
         long userId = 1;
         long documentId = 1;
@@ -105,12 +103,14 @@ public class CommentServiceTest {
         Comment commentMock = mock(Comment.class);
         when(commentMapper.map(commentDtoMock)).thenReturn(commentMock);
 
+        CommentCreationRequest creationRequest = new CommentCreationRequest(userId, documentId, blockId, commentDtoMock);
+
         Comment savedCommentMock = mock(Comment.class);
         when(commentRepository.save(commentMock)).thenReturn(savedCommentMock);
         when(commentMapper.map(savedCommentMock)).thenReturn(commentDto);
 
         //when
-        CommentDto result = sut.create(userId, documentId, blockId, commentDtoMock);
+        CommentDto result = sut.create(creationRequest);
 
         //then
         verify(commentRepository).save(commentMock);
@@ -119,17 +119,24 @@ public class CommentServiceTest {
     }
 
     @Test
-    void given_any_null_value_when_create_then_throw_exception() {
+    void given_null_value_when_create_then_throw_exception() {
+
         //given
         long userId = 1;
         long documentId = 1;
         long blockId = 1;
 
+        CommentCreationRequest creationRequest = new CommentCreationRequest(userId, documentId, blockId, null);
 
         //then
-        assertThrows(ExpertConsultationException.class, () -> sut.create(userId, documentId, blockId, null));
+        assertThrows(ExpertConsultationException.class, () -> sut.create(creationRequest));
     }
 
+    @Test
+    void given_any_null_values_when_create_then_throw_exception() {
+
+        assertThrows(ExpertConsultationException.class, () -> sut.create(null));
+    }
 
     @Test
     void given_commentDto_and_valid_id_when_update_then_return_updated_dto() {
@@ -165,14 +172,12 @@ public class CommentServiceTest {
     void given_any_null_value_when_update_then_throw_exception() {
 
         assertThrows(ExpertConsultationException.class, () -> sut.update(null, commentDto));
-
     }
 
     @Test
     void given_any_null_value_when_delete_then_throw_exception() {
 
         assertThrows(ExpertConsultationException.class, () -> sut.delete(null));
-
     }
 
     @Test
@@ -201,7 +206,7 @@ public class CommentServiceTest {
         List<CommentDto> results = sut.list(documentBlockId);
 
         //then
-        assertThat(results.size()).isEqualTo(0);
+        assertThat(results.size()).isZero();
     }
 
     @Test

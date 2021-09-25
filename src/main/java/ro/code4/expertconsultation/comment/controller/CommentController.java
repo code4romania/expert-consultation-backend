@@ -2,6 +2,7 @@ package ro.code4.expertconsultation.comment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ro.code4.expertconsultation.comment.model.CommentCreationRequest;
 import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.service.CommentService;
 
@@ -9,18 +10,15 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/documents/{documentId}/blocks/{blockId}/comments")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
     private CommentService commentService;
 
     @PostMapping
     public CommentDto create(
-            @PathVariable final Long userId,
-            @PathVariable final Long documentId,
-            @PathVariable final Long blockId,
-            @RequestBody CommentDto commentDto) {
-        return commentService.create(userId, documentId, blockId, commentDto);
+            @RequestBody CommentCreationRequest commentCreationRequest) {
+        return commentService.create(commentCreationRequest);
     }
 
     @GetMapping("/{id}")

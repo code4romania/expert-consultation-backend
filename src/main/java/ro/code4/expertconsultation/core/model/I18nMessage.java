@@ -8,6 +8,8 @@ public class I18nMessage {
     private final String i18nKey;
     private final List<String> i18nArgs;
 
+    public static final String NULL_ARGUMENTS_RECEIVED = "null.arguments.received";
+
     public I18nMessage(final String i18nKey, List<String> i18nArgs) {
         this.i18nKey = i18nKey;
         this.i18nArgs = i18nArgs;

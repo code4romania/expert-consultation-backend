@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.code4.expertconsultation.comment.mapper.CommentMapper;
+import ro.code4.expertconsultation.comment.model.CommentCreationRequest;
 import ro.code4.expertconsultation.comment.model.dto.CommentDto;
 import ro.code4.expertconsultation.comment.model.persistence.Comment;
 import ro.code4.expertconsultation.comment.repository.CommentRepository;
@@ -18,25 +19,27 @@ import ro.code4.expertconsultation.user.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
-    private DocumentBlockService documentBlockService;
+    private final DocumentBlockService documentBlockService;
 
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
     public List<CommentDto> list(final Long documentBlockId) {
         if (documentBlockId == null) {
             throw ExpertConsultationException.builder()
-                    .error(new I18nMessage("null.arguments.received"))
+                    .error(new I18nMessage(I18nMessage.NULL_ARGUMENTS_RECEIVED))
                     .httpStatus(HttpStatus.BAD_REQUEST)
                     .build();
         }
@@ -52,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto get(Long id) {
         if (id == null) {
             throw ExpertConsultationException.builder()
-                    .error(new I18nMessage("null.arguments.received"))
+                    .error(new I18nMessage(I18nMessage.NULL_ARGUMENTS_RECEIVED))
                     .httpStatus(HttpStatus.BAD_REQUEST)
                     .build();
         }
@@ -64,11 +67,27 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto create(Long userId, Long documentId, Long blockId, CommentDto commentDto) {
+    public CommentDto create(CommentCreationRequest commentCreationRequest) {
+        Long userId = null;
+        Long documentId = null;
+        Long blockId = null;
+        CommentDto commentDto = null;
 
-        if (((userId == null) || (documentId == null) || (blockId == null) || (commentDto == null))) {
+        boolean isNull = commentCreationRequest == null;
+
+        if (!isNull) {
+            userId = commentCreationRequest.getUserId();
+            documentId = commentCreationRequest.getDocumentId();
+            blockId = commentCreationRequest.getBlockId();
+            commentDto = commentCreationRequest.getCommentDto();
+
+            isNull = Stream.of(userId, documentId, blockId, commentDto)
+                    .anyMatch(Objects::isNull);
+        }
+
+        if (isNull) {
             throw ExpertConsultationException.builder()
-                    .error(new I18nMessage("null.arguments.received"))
+                    .error(new I18nMessage(I18nMessage.NULL_ARGUMENTS_RECEIVED))
                     .httpStatus(HttpStatus.BAD_REQUEST)
                     .build();
         }
@@ -91,7 +110,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto update(Long commentId, CommentDto commentDto) {
         if ((commentId == null) || (commentDto == null)) {
             throw ExpertConsultationException.builder()
-                    .error(new I18nMessage("null.arguments.received"))
+                    .error(new I18nMessage(I18nMessage.NULL_ARGUMENTS_RECEIVED))
                     .httpStatus(HttpStatus.BAD_REQUEST)
                     .build();
         }
@@ -109,7 +128,7 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Long commentId) {
         if (commentId == null) {
             throw ExpertConsultationException.builder()
-                    .error(new I18nMessage("null.arguments.received"))
+                    .error(new I18nMessage(I18nMessage.NULL_ARGUMENTS_RECEIVED))
                     .httpStatus(HttpStatus.BAD_REQUEST)
                     .build();
         }
