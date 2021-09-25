@@ -1,7 +1,6 @@
 package ro.code4.expertconsultation.organization.model.persistence;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ro.code4.expertconsultation.core.model.persistence.Identifiable;
 import ro.code4.expertconsultation.organization.model.OrganizationCategory;
 
@@ -14,6 +13,9 @@ import javax.persistence.Table;
 @Table(name = "organizations")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Organization extends Identifiable {
     @Enumerated(EnumType.STRING)
     private OrganizationCategory category;

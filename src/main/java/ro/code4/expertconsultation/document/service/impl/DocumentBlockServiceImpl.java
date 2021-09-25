@@ -70,4 +70,8 @@ public class DocumentBlockServiceImpl implements DocumentBlockService {
     public void delete(final Long documentId, final Long documentBlockId) {
         documentBlockRepository.deleteById(documentBlockId);
     }
+
+    public DocumentBlock getEntity(final Long documentBlockId) {
+        return documentBlockRepository.getById(documentBlockId);
+    }
 }

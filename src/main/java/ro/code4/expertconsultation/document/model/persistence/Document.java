@@ -1,7 +1,6 @@
 package ro.code4.expertconsultation.document.model.persistence;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ro.code4.expertconsultation.core.model.persistence.Identifiable;
 import ro.code4.expertconsultation.document.model.DocumentState;
 import ro.code4.expertconsultation.document.model.DocumentType;
@@ -15,6 +14,9 @@ import javax.persistence.Table;
 @Table(name = "documents")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Document extends Identifiable {
     @Enumerated(EnumType.STRING)
     private DocumentType type;

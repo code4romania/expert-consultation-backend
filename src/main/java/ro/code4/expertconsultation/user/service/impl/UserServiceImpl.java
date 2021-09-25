@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService {
         final User updatedUser = userRepository.save(user);
         return userMapper.map(updatedUser);
     }
+
+    @Override
+    public User getEntity(final Long userId) {
+        return userRepository.getById(userId);
+    }
 }
